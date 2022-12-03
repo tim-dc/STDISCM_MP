@@ -1,23 +1,13 @@
-Dr. Rafael A. Cabredo Dean rafael.cabredo@dlsu.edu.ph 
-Dr. Charibeth K. Cheng Associate Dean charibeth.cheng@dlsu.edu.ph 
-Ms. Shirley B. Chu Assistant Dean, External Affairs and Lasallian Mission shirley.chu@dlsu.edu.ph 
-Dr. Christine Diane L. Ramos Assistant Dean, Research and Graduate Studies christine.diane.ramos@dlsu.edu.ph 
-Dr. Ma. Rowena R. Caguiat Director, Consulting and Education Center ma.rowena.caguiat@dlsu.edu.ph 
-Mr. Gregory G. Cu Head, Technical Support Group gregory.cu@dlsu.edu.ph 
-Dr. Marnel S. Peradilla Chair marnel.peradilla@dlsu.edu.ph Department of Computer Technology 
-Ms. Arlyn Verina L. Ong-Tiu Vice Chair arlyn.ong@dlsu.edu.ph Department of Computer Technology 
-Dr. Ronald M. Pascual Coordinator, CT Thesis ronald.pascual@dlsu.edu.ph Department of Computer Technology 
-Ms. Arlyn Verina L. Ong-Tiu Coordinator, Graduate Studies (MINFSEC) arlyn.ong@dlsu.edu.ph Department of Computer Technology 
-Mr. Clement Y. Ong Coordinator, Instructional Computer Technology Laboratory clement.ong@dlsu.edu.ph Department of Computer Technology 
-Dr. Michelle Renee D. Ching Chair michelle.ching@dlsu.edu.ph Department of Information Technology 
-Ms. Lissa Andrea K. Magpantay Vice Chair lissa.magpantay@dlsu.edu.ph Department of Information Technology 
-Mr. Oliver A. Malabanan Coordinator, BSIS and BSIT Capstone oliver.malabanan@dlsu.edu.ph Department of Information Technology 
-Dr. Michelle Renee D. Ching Coordinator, Graduate Studies (DIT) michelle.ching@dlsu.edu.ph Department of Information Technology 
-Ms. Lissa Andrea K. Magpantay Coordinator, Graduate Studies (MSIT, MIT) lissa.magpantay@dlsu.edu.ph Department of Information Technology 
-Dr. Briane Paul V. Samson Chair briane.samson@dlsu.edu.ph Department of Software Technology 
-Mr. Neil Patrick A. Del Gallego Vice Chair neil.delgallego@dlsu.edu.ph Department of Software Technology 
-Mr. Edward P Tighe Coordinator, BSCS Thesis and BSIET Capstone edward.tighe@dlsu.edu.ph Department of Software Technology 
-Dr. Ethel C. Ong Coordinator, Graduate Studies (MSCS, PhDCS) ethel.ong@dlsu.edu.ph Department of Software Technology 
-Mr. Neil Patrick A. Del Gallego Program Director, Laguna Campus neil.delgallego@dlsu.edu.ph Department of Software Technology 
-Ms. Ma. Christine A. Gendrano Program Coordinator (BSCS, BSIS, BSIT), Laguna Campus ma.christine.gendrano@dlsu.edu.ph Department of Software Technology 
-Mr. Ryan Samuel M. Dimaunahan Program Coordinator (BSIET), Laguna Campus ryan.dimaunahan@dlsu.edu.ph Department of Software Technology 
+Dr. Kathleen B. Aviso Dean rosemary.seva@dlsu.edu.ph 
+Dr. Aristotle T. Ubando Associate Dean aileen.orbecido@dlsu.edu.ph 
+Dr. Rosemary R. Seva Engr. Maria Antonette C. Roque vicechairChE@dlsu.edu.ph 
+Dr. Nicanor R. Roxas, Jr. Assistant Dean, Research and Advanced Studies (RAS) mary.ann.adajar@dlsu.edu.ph 
+Dr. Aileen H. Orbecido Assistant Dean, Quality Assurance jasmin.tangsoc@dlsu.edu.ph 
+..
+Department of Chemical Engineering 
+Dr. Arnel B. Beltran Assistant Dean, External Affairs and Lasallian Mission  vicechairMEM@dlsu.edu.ph 
+..
+Department of Chemical Engineering 
+Dr. Allan N. Soriano Chair robert.billones@dlsu.edu.ph 
+..
+Department of Chemical Engineering 
