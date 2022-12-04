@@ -13,6 +13,9 @@ import time
 # Threading
 import queue
 import threading
+# Concurrency
+import concurrent.futures
+NUM_THREADS = 10
 
 # start the timer to get the time
 start = time.time()
@@ -53,37 +56,40 @@ def remove_duplicates(l):
 
 """ Main Body - Execution Process """
 
-# 1. Get all the links associated to the main URL -> 'https://www.dlsu.edu.ph'
-for link in soup.find_all('a', href=True):
-    # append to the data all website links found on the main one
-    data.append(str(link.get('href')))
+def get_urls(soup):
+    # 1. Get all the links associated to the main URL -> 'https://www.dlsu.edu.ph'
+    for link in soup.find_all('a', href=True):
+        # append to the data all website links found on the main one
+        data.append(str(link.get('href')))
 
-# 2. Remove the dublicates from the 'data'; Note: final list will be on sub_links
-remove_duplicates(data)
+    # 2. Remove the dublicates from the 'data'; Note: final list will be on sub_links
+    remove_duplicates(data)
 
-# 3. while flag is true, gets the link address, remove duplicates, checking limits for the number of urls
-flag = True
-while flag:
-    try:
-        for link in sub_links:
-            for j in soup.find_all('a', href=True):
-                # store in a temporary one
-                temp = []
-                source_code = requests.get(link)
-                soup = BeautifulSoup(source_code.content, 'lxml')
-                temp.append(str(j.get('href')))
-                remove_duplicates(temp)
+    # 3. while flag is true, gets the link address, remove duplicates, checking limits for the number of urls
+    flag = True
+    while flag:
+        try:
+            for link in sub_links:
+                for j in soup.find_all('a', href=True):
+                    # store in a temporary one
+                    temp = []
+                    source_code = requests.get(link)
+                    soup = BeautifulSoup(source_code.content, 'lxml')
+                    temp.append(str(j.get('href')))
+                    remove_duplicates(temp)
 
-                if len(sub_links) > url_limit: # set limitation to number of URLs
+                    if len(sub_links) > url_limit: # set limitation to number of URLs
+                        break
+                if len(sub_links) > url_limit:
                     break
             if len(sub_links) > url_limit:
                 break
-        if len(sub_links) > url_limit:
-            break
-    except Exception as e:
-        print(e)
-        if len(sub_links) > url_limit:
-            break
+        except Exception as e:
+            print(e)
+            if len(sub_links) > url_limit:
+                break
+with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
+    executor.map(get_urls, soup)
 
 # Display ALL links generated, no duplicates must be found.         
 print ("The DLSU Website has the following sub URLS:")
