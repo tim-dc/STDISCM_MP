@@ -150,9 +150,18 @@ def get_emails(url_index):
     soup2 = BeautifulSoup(testpage.content, 'lxml')
 
     try:
+        # flag = True
+        # while(flag):
         # Accessing the table itself for the current website
         table = soup2.find('div',{'class':'wpb_wrapper'})
         table
+
+        # if (table!=None):
+        #     print("Data extracted!\n")
+        #     flag = False
+        # else:
+        #     print("Data is still being extracted...")
+        #     flag = True
 
         """ Declaring the arrays where the data will be saved
             For future use.
@@ -212,6 +221,8 @@ def get_emails(url_index):
         print('Data Failed to extract!')
         print(e)
 
+# This is where threading begins, using the map() function to assign threads to run get_emails() and the index number'range(len(workable_urls))'
+#  to be placed as parameters for get_emails
 with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor2:
     executor2.map(get_emails, range(len(workable_urls))) 
 

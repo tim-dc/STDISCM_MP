@@ -1,4 +1,4 @@
 # Statistics of the Website
 URL: https://www.dlsu.edu.ph
-Number of pages scraped: 175
+Number of pages scraped: 11
 Total No. of Emails Extracted: 30
