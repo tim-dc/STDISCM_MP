@@ -88,6 +88,8 @@ def get_urls(soup):
             print(e)
             if len(sub_links) > url_limit:
                 break
+
+            
 with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
     executor.map(get_urls, soup)
 
@@ -112,12 +114,22 @@ def deCFEmail(fp):
     except (ValueError):
         pass
 
+
 """ Temporary website urls to be scraped now """
 workable_urls = ['https://www.dlsu.edu.ph/colleges/gcoe/office-of-the-dean/',
                 'https://www.dlsu.edu.ph/colleges/ccs/office-of-the-dean/']
 
-# the test website where emails will be scraped
-a = workable_urls[1]
+position = []
+names = []
+emails = []
+department = []
+urlsList = []
+testList = []
+
+temp = ""
+temp_dept = ""
+dept = "Department"
+titles = ["Mr","Dr","Mrs","Ms"]
 
 """ While Flag is equal to true, which signifies that table is equal to none,
     repeat this process;
@@ -126,90 +138,82 @@ a = workable_urls[1]
     This process will be repeated unless, table has retrieved data already.
 """
 print("Web Scraping has started... This will take a while... ")
-flag = True
-while(flag):
+
+def get_emails(url_index):
+    global temp_dept
+    global position
+    global testList
+
+    a = workable_urls[url_index]
+    print("Url :", a)
     testpage = requests.get(a)
     soup2 = BeautifulSoup(testpage.content, 'lxml')
 
-    # Accessing the table itself for the current website
-    table = soup2.find('div',{'class':'wpb_wrapper'})
-    table
-
-    if (table!=None):
-        print("Data extracted!\n")
-        flag = False
-    else:
-        print("Data is still being extracted...")
-        flag = True
-
-
-""" Declaring the arrays where the data will be saved
-    For future use.
-    NOTE: Need to get the ff:
-        (1) email
-        (2) associated name
-        (3) office
-        (4) department/ unit
-        (5) urls scraped
-"""
-position = []
-names = []
-emails = []
-department = []
-urlsList = []
-
-temp = ""
-temp_dept = ""
-
-dept = "Department"
-titles = ["Mr","Dr","Mrs","Ms"]
-
-# getting the length of all tables on the website
-table_length = len(table.find_all('td'))
-
-# filling in the arrays with the data from the table
-for x in range(0,table_length):
-    temp = table.find_all('td')[x]      
-    
-    if dept in temp.text:
-        temp_dept = temp.text
-    elif any(word in temp.text for word in titles):
-        names.append(temp.text)
-        department.append(temp_dept)
-    elif temp.text == None:
-        pass
-    else:
-        position.append(temp.text)
-         
     try:
-         # email
-        temp2 = table.find_all('td')[x].a['href']
-        if "email-protect" in temp2:
-            emails.append(deCFEmail(temp2.split("#")[1]))
-    except:
-        pass
-    
-    
+        # Accessing the table itself for the current website
+        table = soup2.find('div',{'class':'wpb_wrapper'})
+        table
 
-position = list(filter(None, position))
+        """ Declaring the arrays where the data will be saved
+            For future use.
+            NOTE: Need to get the ff:
+                (1) email
+                (2) associated name
+                (3) office
+                (4) department/ unit
+                (5) urls scraped
+        """
 
-""" Displays the length of names, urls, departments, positions, and emails"""
-print("Current number of information extracted on the given website")
-print("Number of names: ", len(names))
-print("Number of urls: ", len(urlsList))
-print("Number of departments: ", len(department))
-print("Number of positions: ", len(position))
-print("Number of emails: ", len(emails))
-print("\n")
+        # getting the length of all tables on the website
+        table_length = len(table.find_all('td'))
 
-""" Filter and group together the extracted data """
-emails
-position = list(filter(None, position))
+        # filling in the arrays with the data from the table
+        for x in range(0,table_length):
+            temp = table.find_all('td')[x]      
+            # print("Temp:", temp)
+            if dept in temp.text:
+                temp_dept = temp.text
+                # print("Dept:", temp_dept)
+            elif any(word in temp.text for word in titles):
+                names.append(temp.text)
+                department.append(temp_dept)
+            elif temp.text == None:
+                pass
+            else:
+                position.append(temp.text)
+                
+            try:
+                # email
+                temp2 = table.find_all('td')[x].a['href']
+                if "email-protect" in temp2:
+                    emails.append(deCFEmail(temp2.split("#")[1]))
+            except:
+                pass
+       
+        """ Displays the length of names, urls, departments, positions, and emails"""
+        print("Current number of information extracted on the given website")
+        print("Number of names: ", len(names))
+        print("Number of urls: ", len(urlsList))
+        print("Number of departments: ", len(department))
+        print("Number of positions: ", len(position))
+        print("Number of emails: ", len(emails))
+        print("\n")
 
-testList = list(zip(names,position,emails,department))
-testList
+        """ Filter and group together the extracted data """
+        emails
+        position = list(filter(None, position))
 
-""" Next steps will be the output generation """
+        testList = list(zip(names,position,emails,department))
+        testList
+
+        """ Next steps will be the output generation """
+
+    except Exception as e:
+        print('Data Failed to extract!')
+        print(e)
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor2:
+    executor2.map(get_emails, range(len(workable_urls))) 
 
 # Declaration of Dataframe that will serve as the output NO. 1
 df = pd.DataFrame (testList, columns = ['Name','Position', 'Email', 'Department'])
