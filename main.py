@@ -169,6 +169,7 @@ for x in range(0,table_length):
         temp_dept = temp.text
     elif any(word in temp.text for word in titles):
         names.append(temp.text)
+        department.append(temp_dept)
     elif temp.text == None:
         pass
     else:
@@ -182,7 +183,7 @@ for x in range(0,table_length):
     except:
         pass
     
-    department.append(temp_dept)
+    
 
 position = list(filter(None, position))
 
