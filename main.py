@@ -14,9 +14,14 @@ import time
 import queue
 import threading
 
+<<<<<<< Updated upstream
 # concurrency
 import concurrent.futures
 
+=======
+# Concurrency
+import concurrent.futures
+>>>>>>> Stashed changes
 NUM_THREADS = 10
 
 # start the timer to get the time
@@ -57,6 +62,7 @@ def remove_duplicates(l):
             sub_links.append((match.group("url")))
 
 """ Main Body - Execution Process """
+<<<<<<< Updated upstream
 def get_urls(soup):
     # 1. Get all the links associated to the main URL -> 'https://www.dlsu.edu.ph'
     for link in soup.find_all('a', href=True):
@@ -67,6 +73,19 @@ def get_urls(soup):
     remove_duplicates(data)
 
     # 3. while flag is true, gets the link address, remove duplicates, checking limits for the number of urls
+=======
+
+# 1. Get all the links associated to the main URL -> 'https://www.dlsu.edu.ph'
+for link in soup.find_all('a', href=True):
+    # append to the data all website links found on the main one
+    data.append(str(link.get('href')))
+
+# 2. Remove the dublicates from the 'data'; Note: final list will be on sub_links
+remove_duplicates(data)
+
+# 3. while flag is true, gets the link address, remove duplicates, checking limits for the number of urls
+def get_urls(soup):
+>>>>>>> Stashed changes
     flag = True
     while flag:
         try:
@@ -89,9 +108,12 @@ def get_urls(soup):
             print(e)
             if len(sub_links) > url_limit:
                 break
+<<<<<<< Updated upstream
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
     executor.map(get_urls, soup)
+=======
+>>>>>>> Stashed changes
 
 # Display ALL links generated, no duplicates must be found.         
 print ("The DLSU Website has the following sub URLS:")
@@ -117,6 +139,11 @@ def deCFEmail(fp):
 """ Temporary website urls to be scraped now """
 workable_urls = ['https://www.dlsu.edu.ph/colleges/gcoe/office-of-the-dean/',
                 'https://www.dlsu.edu.ph/colleges/ccs/office-of-the-dean/']
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
+    executor.map(get_urls, soup)
+
+
 
 # the test website where emails will be scraped
 print("Web Scraping has started... This will take a while... ")
