@@ -8,20 +8,30 @@ import requests
 import html5lib
 from bs4 import BeautifulSoup
 import re
-# For printing
+# For the reference of the group
 import time
 # Threading
 import queue
 import threading
 # Concurrency
 import concurrent.futures
+
+""" Set the limit for the number of threads to be spwaned.
+    This is to prevent the cloudflare from blocking any processes
+"""
 NUM_THREADS = 10
 
-# start the timer to get the time
+
+""" Added variables related to time.
+    start: The exact execution time of the project
+    current_time: exact time; to be displayed
+"""
+# start the timer to get the time for later
 start = time.time()
 current_time = time.strftime("%H:%M:%S")
 print ("Started at:", current_time)
 print ("\n")
+
 
 """ Declare and define some of the global variables
     main_url: As per the requirements, DLSU website will be used
@@ -54,8 +64,11 @@ def remove_duplicates(l):
             # will append on the sub_links dataset
             sub_links.append((match.group("url")))
 
-""" Main Body - Execution Process """
-
+""" Function: get_urls
+    This function gets all the links associated to the DLSU Website;
+    Remove the duplicates;
+    Constantly checking the limit (10)
+"""
 def get_urls(soup):
     # 1. Get all the links associated to the main URL -> 'https://www.dlsu.edu.ph'
     for link in soup.find_all('a', href=True):
@@ -89,7 +102,9 @@ def get_urls(soup):
             if len(sub_links) > url_limit:
                 break
 
-            
+""" Main Body - Execution Process """
+
+# Concurrent Process
 with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
     executor.map(get_urls, soup)
 
@@ -115,9 +130,12 @@ def deCFEmail(fp):
         pass
 
 
-""" Temporary website urls to be scraped now """
+""" Temporary hard coded website urls to be scraped now """
 workable_urls = ['https://www.dlsu.edu.ph/colleges/gcoe/office-of-the-dean/',
-                'https://www.dlsu.edu.ph/colleges/ccs/office-of-the-dean/']
+                'https://www.dlsu.edu.ph/colleges/ccs/office-of-the-dean/',
+                'https://www.dlsu.edu.ph/colleges/bagced/office-of-the-dean/',
+                'https://www.dlsu.edu.ph/colleges/cos/office-of-the-dean/',
+                'https://www.dlsu.edu.ph/colleges/cla/office-of-the-dean/']
 
 position = []
 names = []
@@ -125,6 +143,7 @@ emails = []
 department = []
 urlsList = []
 testList = []
+email_counter = 0
 
 temp = ""
 temp_dept = ""
@@ -150,18 +169,8 @@ def get_emails(url_index):
     soup2 = BeautifulSoup(testpage.content, 'lxml')
 
     try:
-        # flag = True
-        # while(flag):
-        # Accessing the table itself for the current website
         table = soup2.find('div',{'class':'wpb_wrapper'})
         table
-
-        # if (table!=None):
-        #     print("Data extracted!\n")
-        #     flag = False
-        # else:
-        #     print("Data is still being extracted...")
-        #     flag = True
 
         """ Declaring the arrays where the data will be saved
             For future use.
@@ -175,6 +184,7 @@ def get_emails(url_index):
 
         # getting the length of all tables on the website
         table_length = len(table.find_all('td'))
+        print("\nData successfully extracted!\n")
 
         # filling in the arrays with the data from the table
         for x in range(0,table_length):
@@ -218,8 +228,9 @@ def get_emails(url_index):
         """ Next steps will be the output generation """
 
     except Exception as e:
-        print('Data Failed to extract!')
-        print(e)
+        print('Data Failed to extract! Repeating the process...\n')
+    
+    email_counter += len(emails)
 
 # This is where threading begins, using the map() function to assign threads to run get_emails() and the index number'range(len(workable_urls))'
 #  to be placed as parameters for get_emails
@@ -239,7 +250,7 @@ df2 = [('URL: '+str(main_url)), ('Number of pages scraped: '+ str(len(sub_links)
 # Saving the content to the text file named "Statistics.txt"
 np.savetxt('Statistics.txt',  df2, fmt='%s', delimiter=" \n ",  header=text2)
 
-print("Web Scraping succesfully completed. Check your files for the extracted information and statistics.")
+print("Web Scraping succesfully completed. \nCheck your files for the extracted information and statistics.")
 print("Open Extracted_Information.txt and Statistics.txt")
 
 
