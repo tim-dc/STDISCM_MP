@@ -44,7 +44,12 @@ print ("\n")
     data: raw data of all found websites on the main one
 """
 
-main_url = 'https://www.dlsu.edu.ph'
+#main_url = 'https://www.dlsu.edu.ph'
+# Taking input from the user
+print("Enter the website you want to be scraped: ")
+main_url = input()
+
+
 response = requests.get(main_url)
 soup = BeautifulSoup(response.content, 'lxml')
 
@@ -143,7 +148,6 @@ emails = []
 department = []
 urlsList = []
 testList = []
-email_counter = 0
 
 temp = ""
 temp_dept = ""
@@ -230,7 +234,8 @@ def get_emails(url_index):
     except Exception as e:
         print('Data Failed to extract! Repeating the process...\n')
     
-    email_counter += len(emails)
+    # counter for the email, to be part of the output text file
+    #email_counter += len(emails)
 
 # This is where threading begins, using the map() function to assign threads to run get_emails() and the index number'range(len(workable_urls))'
 #  to be placed as parameters for get_emails
